@@ -1,14 +1,19 @@
 package com.assesment.employee_management_system.entity;
 
-import jakarta.persistence.*;
-
 import java.util.Date;
 
-@Entity(name = "employee")
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class Employee {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -18,6 +23,7 @@ public class Employee {
     private double salary;
 
     @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
 
     private String address;
@@ -29,9 +35,26 @@ public class Employee {
     private double yearlyBonusPercentage;
 
     @ManyToOne
+    @JoinColumn(name = "reporting_manager_id")
     private Employee reportingManager;
+    
+    public Employee() {
+		super();
+	}
 
-    @Override
+	public Employee(String name, Date dateOfBirth, double salary, String address, String role,
+			Date joiningDate, double yearlyBonusPercentage) {
+		super();
+		this.name = name;
+		this.dateOfBirth = dateOfBirth;
+		this.salary = salary;
+		this.address = address;
+		this.role = role;
+		this.joiningDate = joiningDate;
+		this.yearlyBonusPercentage = yearlyBonusPercentage;
+	}
+
+	@Override
     public String toString() {
         return "Employee{" +
                 "id=" + id +

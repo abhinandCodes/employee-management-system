@@ -1,24 +1,29 @@
 package com.assesment.employee_management_system.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-
 import java.util.Date;
 import java.util.List;
 
-@Entity(name = "department")
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+
+@Entity
 public class Department {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
     private Date creationDate;
 
+    @OneToOne
+    @JoinColumn(name = "department_head_id")
     private Employee departmentHead;
 
     @OneToMany(mappedBy = "department")
@@ -74,4 +79,15 @@ public class Department {
     public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
+
+	public Department() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Department(String name, Date creationDate) {
+		super();
+		this.name = name;
+		this.creationDate = creationDate;
+	}
 }
