@@ -62,4 +62,33 @@ public class EmployeeService {
 		
 	}
 
+	public void updateEmployee(Long id, EmployeeDTO employeeDto) {
+		
+		Employee existingEmployee = employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
+
+		existingEmployee.setName(employeeDto.getName());
+        existingEmployee.setDateOfBirth(employeeDto.getDateOfBirth());
+        existingEmployee.setSalary(employeeDto.getSalary());
+        existingEmployee.setAddress(employeeDto.getAddress());
+        existingEmployee.setRole(employeeDto.getRole());
+        existingEmployee.setJoiningDate(employeeDto.getJoiningDate());
+        existingEmployee.setYearlyBonusPercentage(employeeDto.getYearlyBonusPercentage());
+
+        if (employeeDto.getDepartmentId() != null) {
+            Department department = departmentRepository.findById(employeeDto.getDepartmentId())
+                    .orElseThrow(() -> new EmployeeNotFoundException("Department not found"));
+            existingEmployee.setDepartment(department);
+        }
+
+        if (employeeDto.getReportingManagerId() != null) {
+            Employee reportingManager = employeeRepository.findById(employeeDto.getReportingManagerId())
+                    .orElseThrow(() -> new EmployeeNotFoundException("Reporting Manager not found"));
+            existingEmployee.setReportingManager(reportingManager);
+        }
+		
+		employeeRepository.save(existingEmployee);
+		
+	}
+
 }

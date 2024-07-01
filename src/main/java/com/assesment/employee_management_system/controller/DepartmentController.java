@@ -5,12 +5,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.assesment.employee_management_system.dto.DepartmentDTO;
+import com.assesment.employee_management_system.dto.EmployeeDTO;
 import com.assesment.employee_management_system.entity.Department;
+import com.assesment.employee_management_system.entity.Employee;
 import com.assesment.employee_management_system.service.DepartmentService;
 
 @RestController
@@ -41,6 +44,15 @@ public class DepartmentController {
 		departmentService.deleteDepartment(id);
 		
 		return ResponseEntity.ok().build();
+		
+	}
+	
+	@PutMapping("/update/{id}")
+	public ResponseEntity<Department> updateDepartment(@PathVariable Long id, @RequestBody DepartmentDTO department) {
+		
+		departmentService.updateDepartment(id, department);
+		
+		return new ResponseEntity<>(HttpStatus.CREATED);
 		
 	}
 	

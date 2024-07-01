@@ -66,4 +66,22 @@ public class DepartmentService {
 		}
 		
 	}
+
+	public void updateDepartment(Long id, DepartmentDTO department) {
+		
+		Department existingDept = departmentRepository.findById(id)
+                .orElseThrow(() -> new DepartmentNotFoundException("Department not found"));
+
+		existingDept.setName(department.getName());
+		existingDept.setCreationDate(department.getCreationDate());
+
+        if (department.getDepartmentHeadId() != null) {
+            Employee employee = employeeRepository.findById(department.getDepartmentHeadId())
+                    .orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
+            existingDept.setDepartmentHead(employee);
+        }
+
+		departmentRepository.save(existingDept);
+		
+	}
 }
