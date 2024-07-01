@@ -20,7 +20,9 @@ public class DepartmentController {
 	private DepartmentService departmentService;
 
 	public DepartmentController(DepartmentService departmentService) {
+		
 		super();
+		
 		this.departmentService = departmentService;
 	}
 	
