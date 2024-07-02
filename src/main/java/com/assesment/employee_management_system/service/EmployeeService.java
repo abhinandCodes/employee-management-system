@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.assesment.employee_management_system.dto.DepartmentDTO;
 import com.assesment.employee_management_system.dto.EmployeeDTO;
 import com.assesment.employee_management_system.entity.Department;
 import com.assesment.employee_management_system.entity.Employee;
@@ -68,26 +69,51 @@ public class EmployeeService {
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
 
 		existingEmployee.setName(employeeDto.getName());
+		
         existingEmployee.setDateOfBirth(employeeDto.getDateOfBirth());
+        
         existingEmployee.setSalary(employeeDto.getSalary());
+        
         existingEmployee.setAddress(employeeDto.getAddress());
+        
         existingEmployee.setRole(employeeDto.getRole());
+        
         existingEmployee.setJoiningDate(employeeDto.getJoiningDate());
+        
         existingEmployee.setYearlyBonusPercentage(employeeDto.getYearlyBonusPercentage());
 
         if (employeeDto.getDepartmentId() != null) {
+        	
             Department department = departmentRepository.findById(employeeDto.getDepartmentId())
                     .orElseThrow(() -> new EmployeeNotFoundException("Department not found"));
+            
             existingEmployee.setDepartment(department);
+            
         }
 
         if (employeeDto.getReportingManagerId() != null) {
+        	
             Employee reportingManager = employeeRepository.findById(employeeDto.getReportingManagerId())
                     .orElseThrow(() -> new EmployeeNotFoundException("Reporting Manager not found"));
+            
             existingEmployee.setReportingManager(reportingManager);
+            
         }
 		
 		employeeRepository.save(existingEmployee);
+		
+	}
+
+	public void updateEmployeeDepartment(DepartmentDTO deptDto, Long employeeId) {
+
+		Department existingDept = departmentRepository.findById(deptDto.getId())
+				.orElseThrow(() -> new DepartmentNotFoundException("Department not found"));
+		
+		Employee employee = employeeRepository.findByEmployeeId(employeeId);
+		
+		employee.setDepartment(existingDept);
+		
+		employeeRepository.save(employee);
 		
 	}
 

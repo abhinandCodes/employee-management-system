@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class DepartmentDTO {
 	
+	private Long id;
+	
 	private String name;
 	
 	private Date creationDate;
@@ -36,6 +38,14 @@ public class DepartmentDTO {
 
 	public DepartmentDTO() {
 		super();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

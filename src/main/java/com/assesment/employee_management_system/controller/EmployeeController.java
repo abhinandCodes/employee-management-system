@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.assesment.employee_management_system.dto.DepartmentDTO;
 import com.assesment.employee_management_system.dto.EmployeeDTO;
 import com.assesment.employee_management_system.entity.Employee;
 import com.assesment.employee_management_system.service.EmployeeService;
@@ -57,6 +58,15 @@ public class EmployeeController {
 		
 		return new ResponseEntity<>(HttpStatus.CREATED);
 
+	}
+	
+	@PutMapping("/updateDepartment/{employeeId}")
+	public ResponseEntity<Employee> updateEmployeeDepartment(@RequestBody DepartmentDTO deptDto ,@PathVariable Long employeeId) {
+		
+		employeeService.updateEmployeeDepartment(deptDto, employeeId);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+		
 	}
 	
 
